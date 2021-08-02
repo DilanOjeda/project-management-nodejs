@@ -1,0 +1,29 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="/css/normalize.css")
+        link(rel="stylesheet", href="/css/app.css")
+
+        title #{title}
+    body
+        header.barra 
+            h1 Uptask - Project Manager 
+            a(href="#") Close Session 
+
+        main.contenedor
+            aside.contenedor-proyectos
+                .panel.crear-proyecto
+                    a(href="#" class="boton") New project
+                        span +
+                .panel.lista-proyectos
+                    h2 Projects 
+                    ul#proyectos.proyectos
+                        li
+                            a(href="#") Blog Web App
+                        li 
+                            a(href="")  Stock System
+ 
+            block content 
