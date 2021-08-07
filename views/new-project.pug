@@ -1,12 +1,14 @@
 extends layout 
 
-block content 
+include mixins/createOrUpdateProject
+
+block content
         .contenido-principal    
                 h1 #{namePage}
+                 
+                pre=vardump(project)
 
-                form.agregar-proyecto(action="/new-project" method="POST") 
-                        .campo
-                                label(for="nombre") Project Name
-                                input(type="text" id = nombre name="nmbre" placeholder="Project Name")
-                        .campo.enviar
-                                input(type="submit", value="Add" class="boton")
+                if errors 
+                        each error in errors
+                                .alerta=error.msg
+                +createOrUpdateProject( project )

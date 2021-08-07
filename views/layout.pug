@@ -10,20 +10,23 @@ html(lang="en")
         title #{title}
     body
         header.barra 
-            h1 Uptask - Project Manager 
+            h1 Project Manager 
             a(href="#") Close Session 
 
         main.contenedor
             aside.contenedor-proyectos
                 .panel.crear-proyecto
-                    a(href="#" class="boton") New project
+                    a(href="/new-project" class="boton") New project #{testingVariable}
                         span +
                 .panel.lista-proyectos
                     h2 Projects 
                     ul#proyectos.proyectos
-                        li
-                            a(href="#") Blog Web App
-                        li 
-                            a(href="")  Stock System
- 
+
+                        if ( projects.length ) 
+                            each project in projects
+                                li
+                                    a(href=`/projects/${project.url}`)= project.name 
             block content 
+
+            pre= vardump(projects)
+    script(src="/dist/bundle.js") 

@@ -4,13 +4,30 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon app.js",
+    "watch": "webpack --watch --mode development",
+    "start": "concurrently -n 'app,webpack' \"npm run dev \" \"npm run watch \""
   },
   "author": "dilan ojeda",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.1",
+    "concurrently": "^6.2.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "pug": "^3.0.2"
+    "express-validator": "^6.12.1",
+    "mysql2": "^2.2.5",
+    "pug": "^3.0.2",
+    "sequelize": "^6.6.5",
+    "shortid": "^2.2.16",
+    "slug": "^5.1.0",
+    "sweetalert2": "^11.1.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.48.0",
+    "webpack-cli": "^4.7.2"
   }
 }

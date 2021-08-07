@@ -1,0 +1,12 @@
+extends layout 
+
+block content
+        .contenido-principal    
+                h1 #{namePage} - #{project.name}
+                 
+                 // Acaccions that can be taken 
+                pre=vardump(project)
+                 .contenedor-acciones
+                        a(href=`/projects/update/${ project.id }` class="boton") Edit Project 
+                        button#eliminar-proyecto( data-url-project=project.url type="button" class="boton eliminar") Delete Project 
+                        
