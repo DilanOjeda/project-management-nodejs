@@ -22,7 +22,6 @@ if ( btnDelete ) {
             if (result.isConfirmed) {
                 
                 const url = `${location.origin}/projects/${urlProject}`
-                console.log(url);
                 axios.delete(url, {
                     params: { urlProject }
                 })
@@ -46,7 +45,8 @@ if ( btnDelete ) {
                     })
                 })
             }
-        })
+        });
+        
     });
 
 }

@@ -3,10 +3,40 @@ extends layout
 block content
         .contenido-principal    
                 h1 #{namePage} - #{project.name}
-                 
-                 // Acaccions that can be taken 
-                pre=vardump(project)
-                 .contenedor-acciones
+
+                form.agregar-tarea(action=`/projects/${project.url}` method="POST")
+                        .campo 
+                                label(for="tarea") Task: 
+                                input.nombre-tarea(type="text" name="name" placeholder="Task Name")
+                        .campo.enviar 
+                                input.boton.nueva-tarea(type="submit" value="Add")
+
+                //- pre=vardump(tasks)
+                //-  Acaccions that can be taken 
+                //- pre=vardump(project)
+                
+                .listado-pendientes
+                        ul
+                                if tasks.length
+                                        each task in tasks
+                                                li.tarea(data-task=task.id)
+                                                        p=task.name
+                                                        .acciones
+                                                                if task.status
+                                                                        i.far.fa-check-circle.completo
+                                                                else 
+                                                                        i.far.fa-check-circle
+                                                                i.fas.fa-trash 
+                                else 
+                                        p There aren't taks in this project.
+                // Progress Bar
+                .avance
+                        h2 Project Progress
+                        #barra-avance.barra-avance
+                                #porcentaje.porcentaje
+
+                // Actions can be done
+                .contenedor-acciones
                         a(href=`/projects/update/${ project.id }` class="boton") Edit Project 
                         button#eliminar-proyecto( data-url-project=project.url type="button" class="boton eliminar") Delete Project 
                         

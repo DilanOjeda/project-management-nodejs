@@ -11,6 +11,7 @@
   "author": "dilan ojeda",
   "license": "ISC",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "axios": "^0.21.1",
     "concurrently": "^6.2.0",
     "dotenv": "^10.0.0",

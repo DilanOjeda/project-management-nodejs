@@ -9,6 +9,8 @@ const app = express();
 
 // Database Connection
 require('./models/project');
+require('./models/task');
+
 connectToDatabase.sync()
     .then( () => console.log('Database Connection was successful.') )
     .catch( error => console.log('ERROR => ', error) );
@@ -30,8 +32,9 @@ app.use( express.urlencoded( { extended:true }) );
     // Load static files
 app.use( express.static('public'));
     // Go to routes ( after urlencoded )
+const taskRoutes = require('./routes/tasks');
 app.use( '/', routes );
-
+app.use( '/', taskRoutes );
 
 // Server 
 

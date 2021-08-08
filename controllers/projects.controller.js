@@ -1,4 +1,5 @@
 
+const { Task } = require('../models');
 const Project = require('../models/project');
 
 const getHomePage = async (req, res) => {
@@ -65,10 +66,21 @@ const getProjectByUrl = async (req, res, next) => {
 
     if ( !project ) return next();
     
+    // Get all the tasks by Project's url
+
+    const tasks = await Task.findAll({
+        where: {
+            projectId: project.id
+        },
+    });
+
+    // console.log( 'TASKS => ', tasks )
+
     res.render('tasks', {
         namePage: 'Project Tasks',
         project,
-        projects
+        projects,
+        tasks
     });
 }
 const showFormDelete = async (req, res) => {
