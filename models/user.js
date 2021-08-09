@@ -48,6 +48,11 @@ const User = connectToDatabase.define('users', {
     }
 });
 
+// Custom methods
+User.prototype.verifyPassword = function (password) {
+    return bcrypt.compareSync( password, this.password ); //(receive, from this model)
+}
+
 User.hasMany(Project);
 
 module.exports = User

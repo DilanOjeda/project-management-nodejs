@@ -4,9 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
+    "start": "nodemon app.js",
     "watch": "webpack --watch --mode development",
-    "start": "concurrently -n 'app,webpack' \"npm run dev \" \"npm run watch \""
+    "dev": "concurrently -n 'app,webpack' \"npm run start \" \"npm run watch \""
   },
   "author": "dilan ojeda",
   "license": "ISC",

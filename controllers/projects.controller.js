@@ -3,8 +3,11 @@ const { Task } = require('../models');
 const Project = require('../models/project');
 
 const getHomePage = async (req, res) => {
+
+    const userId = res.locals.user.id;
+
+    const projects = await Project.findAll({ where: { userId } });
     
-    const projects = await Project.findAll();
     res.render('index', {
         title: 'Projects',
         projects
@@ -13,7 +16,9 @@ const getHomePage = async (req, res) => {
 
 const showProjectForm = async (req, res) => {
 
-    const projects = await Project.findAll();
+    const userId = res.locals.user.id;
+
+    const projects = await Project.findAll({ where: { userId } });
     
     res.render('new-project', {
         namePage: 'New Project',
@@ -27,14 +32,16 @@ const createProject = async (req, res) => {
     const errors = [];
 
     // Get all the projects
-    const projects = await Project.findAll();
+    const userId = res.locals.user.id;
+
+    const projects = await Project.findAll({ where: { userId } });
 
     // Validate the name
     if ( !name ) {
         errors.push({ msg: 'The name is required.' });
     }
 
-    // I there are errors
+    // If there are errors
     if ( errors.length > 0 ) {
         res.render('new-project', {
             namePage: 'New Porject',
@@ -42,10 +49,8 @@ const createProject = async (req, res) => {
             projects
         });
     } else{
-        // Project.create({ name })
-        //     .then( ( project ) => console.log('Porject was created successfully.', project) )
-        //     .catch( error => console.log( 'ERROR => ', error ) );
-        const project = await Project.create({ name });
+        const userId = res.locals.user.id;
+        const project = await Project.create({ name, userId });
         res.redirect('/');
     }
 }
@@ -54,8 +59,11 @@ const getProjectByUrl = async (req, res, next) => {
     
     try {
         const { url } = req.params;
+        
         // Get all the projects
-        const projectsPromise = Project.findAll();
+        const userId = res.locals.user.id;
+        const projectsPromise = Project.findAll({ where: { userId } });
+
         // Get one project
         const projectPromise = Project.findOne({
             where: {
@@ -91,7 +99,8 @@ const showFormDelete = async (req, res) => {
     
     const { id } = req.params;
     
-    const projectsPromise = Project.findAll();
+    const userId = res.locals.user.id;
+    const projectsPromise = Project.findAll({ where: { userId } });
     
     const projectPromise = Project.findOne({ 
         where: {
@@ -114,7 +123,8 @@ const updateProject = async (req, res) => {
     const errors = [];
 
     // Get all the projects
-    const projects = await Project.findAll();
+    const userId = res.locals.user.id;
+    const projects = await Project.findAll({ where: { userId } });
 
     // Validate the name
     if ( !name ) {
@@ -129,9 +139,6 @@ const updateProject = async (req, res) => {
             projects
         });
     } else{
-        // Project.create({ name })
-        //     .then( ( project ) => console.log('Porject was created successfully.', project) )
-        //     .catch( error => console.log( 'ERROR => ', error ) );
         await Project.update(
             { name: name },
             { where: {

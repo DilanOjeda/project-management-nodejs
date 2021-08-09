@@ -4,6 +4,7 @@ const path = require('path');
 const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser'); 
+const passport = require('./config/passport');
 
 const connectToDatabase = require('./config/db');
 const { vardump } = require('./helpers/helpers');
@@ -27,23 +28,30 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, './views'));
 
 // Middlewares 
-    // flash for message 
-app.use( flash() );
 
-    // Session allows users to surf different web pages without authenticate again. 
+// Cookie parser
+app.use( cookieParser() );
+
+// Session allows users to surf different web pages without authenticate again. 
 app.use(session({
     secret: 'superSecret',
     resave: false,
     saveUninitialized: false
 }));
 
-    // Cookie parser
-app.use( cookieParser() );
-    
+app.use( passport.initialize() );
+app.use( passport.session() );
+
+// flash for message 
+app.use( flash() );
+
     // Helpers  
 app.use( (req, res, next ) => { 
+
+    // console.log('USER => ', req.user)    
     res.locals.vardump = vardump;   // Created a local variable that can be used in anywhere in the project (especially for front end).  
     res.locals.messages = req.flash();
+    res.locals.user = { ...req.user } || null;
     next();
 });
     // Enable to read date from form POST

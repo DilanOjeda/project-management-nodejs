@@ -7,13 +7,16 @@ html(lang="en")
             
             h1 #{namePage} 
 
+            if errors
+                p.alerta.error= errors
+
             form#formulario.caja.caja-login(action="/users/login" method="POST")
                 .campo  
                     label(for="email") E-mail
-                    input(type="email" name="email" placeholder="Email" value=email)
+                    input(type="email" name="email" placeholder="Email")
                 .campo
                     label(for="password") Password 
-                    input(type="password" name="password" placeholder="Password" value=password)
+                    input(type="password" name="password" placeholder="Password")
                 .campo.enviar   
                     input.boton(type="submit" value="Sign in")
                 .campo  

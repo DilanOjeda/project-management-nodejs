@@ -19,7 +19,9 @@ const createUser = async (req, res, next) => {
             password
         });
         
-        res.render('login');
+        res.render('login',{
+            namePage: 'Log in to Project Management'
+        });
         
     } catch (error) {
         req.flash( 'error', error.errors.map( error => error.message))
@@ -31,19 +33,27 @@ const createUser = async (req, res, next) => {
             password
         })
     }
-
-    
-    
 }
 
-const login = (req, res, next) => {
+const login = (req, res) => {
+    
+    const { error } = res.locals.messages;
+    // console.log( res.locals.messages )
+    
     res.render('login', {
-        namePage: 'Log in Project Management'
+        namePage: 'Log in Project Management',
+        errors: error
     });
 }
 
+const closeSession = (req, res) => {
+    req.session.destroy( () => {
+        res.redirect('/users/login');
+    })
+}
 module.exports = {
     goToSignin,
     createUser,
-    login
+    login,
+    closeSession
 }
