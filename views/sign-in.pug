@@ -1,0 +1,32 @@
+doctype html
+html(lang="en")
+    head
+        include partials/header
+    body.login 
+        .contenedor-formulario
+        
+            h1 #{namePage}
+            
+            if locals.messages   
+                each category in Object.keys( locals.messages )
+                    each error in messages[category]
+                        .alerta(class=`${category}`)
+                            p= error
+                
+                //- each error in errors
+                //-     p.error.alerta= error.message                    
+
+            form#formulario.caja.caja-login(action="/users/create-user" method="POST")
+                .campo  
+                    label(for="email") E-mail
+                    input(type="email" name="email" placeholder="Email" value=email)
+
+                .campo
+                    label(for="password") Password 
+                    input(type="password" name="password" placeholder="Password" value=password)
+                .campo.enviar   
+                    input.boton(type="submit" value="Sign in")
+                .campo  
+                    a(href="/users/login") Log in 
+
+            script(src="/dist/bundle.js")     

@@ -30,7 +30,7 @@ body {
 .contenedor-formulario p {
     text-align: center;
     color: white;
-    font-size: 1.4rem;
+    font-size: 1.0rem;
 }
 .caja-login {
     background-color: #F2F2F2;
@@ -240,7 +240,7 @@ body.index {
     text-align: center;
     font-size: .9rem;
     font-weight: 900;
-    max-width: 300px;
+    max-width: 40%;
     margin: 0 auto 1rem auto;
     text-transform: uppercase;
 }

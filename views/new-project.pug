@@ -10,5 +10,5 @@ block content
 
                 if errors 
                         each error in errors
-                                .alerta=error.msg
+                                p.error.alerta=error.msg
                 +createOrUpdateProject( project )

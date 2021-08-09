@@ -1,7 +1,10 @@
+require('dotenv').config({ path:'./.env' });
 const express = require('express');
 const path = require('path');
-require('dotenv').config({ path:'./.env' });
-const routes = require('./routes');
+const flash = require('connect-flash');
+const session = require('express-session');
+const cookieParser = require('cookie-parser'); 
+
 const connectToDatabase = require('./config/db');
 const { vardump } = require('./helpers/helpers');
 
@@ -10,6 +13,7 @@ const app = express();
 // Database Connection
 require('./models/project');
 require('./models/task');
+require('./models/user');
 
 connectToDatabase.sync()
     .then( () => console.log('Database Connection was successful.') )
@@ -18,26 +22,45 @@ connectToDatabase.sync()
 // Setting  
     // Enable Pug package
 app.set('view engine', 'pug'); 
+
     // Add views folder (where is pug  going to look for? )
 app.set('views', path.join(__dirname, './views'));
 
 // Middlewares 
-    // Helpers    
+    // flash for message 
+app.use( flash() );
+
+    // Session allows users to surf different web pages without authenticate again. 
+app.use(session({
+    secret: 'superSecret',
+    resave: false,
+    saveUninitialized: false
+}));
+
+    // Cookie parser
+app.use( cookieParser() );
+    
+    // Helpers  
 app.use( (req, res, next ) => { 
     res.locals.vardump = vardump;   // Created a local variable that can be used in anywhere in the project (especially for front end).  
+    res.locals.messages = req.flash();
     next();
 });
     // Enable to read date from form POST
 app.use( express.urlencoded( { extended:true }) );
+
     // Load static files
 app.use( express.static('public'));
+
     // Go to routes ( after urlencoded )
+const projectRoutes = require('./routes/projects');
 const taskRoutes = require('./routes/tasks');
-app.use( '/', routes );
+const userRoutes = require('./routes/users');
+app.use( '/', projectRoutes );
 app.use( '/', taskRoutes );
+app.use( '/', userRoutes );
 
 // Server 
-
 app.listen( process.env.PORT, () => {
     console.log( `It's running on port ${ process.env.PORT }` );
 });

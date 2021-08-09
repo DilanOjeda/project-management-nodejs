@@ -6,8 +6,8 @@ const btnDelete = document.querySelector('#eliminar-proyecto');
 if ( btnDelete ) {
     
     btnDelete.addEventListener('click', (e) => {
+        
         const urlProject = e.target.dataset.urlProject; // urlPoejct comes from data-url-project
-        console.log('URL', urlProject);
          
         Swal.fire({
             title: 'Are you sure to delete the project?',

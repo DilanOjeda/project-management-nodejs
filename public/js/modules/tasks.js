@@ -20,7 +20,6 @@ if ( elementTasks ) {
                 id: idTarea
             })
             .then( (response)=> {
-                console.log( response );
 
                 if ( response.status === 200) {
                     icon.classList.toggle('completo');

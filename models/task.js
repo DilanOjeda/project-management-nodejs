@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const connectToDatabase = require('../config/db');
-const Project = require('./project');
 
+const Project = require('./project')
 
 const Task = connectToDatabase.define('tasks', {
 

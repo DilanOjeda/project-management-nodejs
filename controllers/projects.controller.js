@@ -52,36 +52,40 @@ const createProject = async (req, res) => {
 
 const getProjectByUrl = async (req, res, next) => {
     
-    const { url } = req.params;
-    // Get all the projects
-    const projectsPromise = Project.findAll();
-    // Get one project
-    const projectPromise = Project.findOne({
-        where: {
-            url
-        }
-    });
+    try {
+        const { url } = req.params;
+        // Get all the projects
+        const projectsPromise = Project.findAll();
+        // Get one project
+        const projectPromise = Project.findOne({
+            where: {
+                url
+            }
+        });
 
-    const [project, projects] = await Promise.all([ projectPromise, projectsPromise ]);
+        const [project, projects] = await Promise.all([ projectPromise, projectsPromise ]);
 
-    if ( !project ) return next();
-    
-    // Get all the tasks by Project's url
+        if ( !project ) return next();
+        
+        // Get all the tasks by Project's url
 
-    const tasks = await Task.findAll({
-        where: {
-            projectId: project.id
-        },
-    });
+        const tasks = await Task.findAll({
+            where: {
+                projectId: project.id
+            },
+        });
 
-    // console.log( 'TASKS => ', tasks )
+        // console.log( 'TASKS => ', tasks )
 
-    res.render('tasks', {
-        namePage: 'Project Tasks',
-        project,
-        projects,
-        tasks
-    });
+        res.render('tasks', {
+            namePage: 'Project Tasks',
+            project,
+            projects,
+            tasks
+        });
+    } catch (error) {
+        console.log('ERROR => ', error)
+    }
 }
 const showFormDelete = async (req, res) => {
     
