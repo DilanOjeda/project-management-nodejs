@@ -6,7 +6,12 @@ html(lang="en")
         .contenedor-formulario
             
             h1 #{namePage} 
-
+            if locals.messages   
+                .alertas
+                    each category in Object.keys( locals.messages )
+                        each error in messages[category]
+                            .alerta(class=`${category}`)
+                                p= error
             if errors
                 p.alerta.error= errors
 
@@ -19,7 +24,8 @@ html(lang="en")
                     input(type="password" name="password" placeholder="Password")
                 .campo.enviar   
                     input.boton(type="submit" value="Sign in")
-                .campo  
+                .campo.acciones
                     a(href="/users/sign-in") Don't have an account?
+                    a(href="/users/restore-password") Forgot your password?
 
     script(src="/dist/bundle.js") 

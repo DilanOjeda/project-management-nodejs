@@ -51,9 +51,17 @@ const closeSession = (req, res) => {
         res.redirect('/users/login');
     })
 }
+
+const showAskRestoreForm = (req, res) => {
+    
+    res.render('ask-restore-password', {
+        namePage: 'Restore your password'
+    })
+}
 module.exports = {
     goToSignin,
     createUser,
     login,
-    closeSession
+    closeSession,
+    showAskRestoreForm
 }

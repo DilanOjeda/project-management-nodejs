@@ -37,7 +37,10 @@ const User = connectToDatabase.define('users', {
                 msg: `The password can not be empty.`
             } 
         }
-    }
+    },
+    token: Sequelize.STRING,
+    expiration: Sequelize.DATE
+        
 }, {
     hooks: {
         beforeCreate(user) {
