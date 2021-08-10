@@ -6,6 +6,8 @@ const { Op } = require("sequelize");
 const bcrypt = require('bcryptjs');
 
 const { User } = require('../models');
+const sendResetPasswordEmail = require('../handlers/email');
+
 
 const authenticateUser = passport.authenticate( 'local', {
     successRedirect: '/',
@@ -46,8 +48,17 @@ const generateTokenToRestorePassword = async (req, res, next) => {
     // Url reset  
     const urlReset = `http://${req.headers.host}/users/restore-password/${user.token}`
     
-    console.log( urlReset );
-    res.send( 'Please, Check yout email' );
+    // Sent email to reset password
+    await sendResetPasswordEmail({
+        email,
+        subject: 'Password Reset',
+        url: urlReset,
+        file: 'reset-password'
+    });
+
+
+    req.flash('correcto', 'A message has been sent to your email to reset your password')
+    res.redirect('/users/login')
 }
 
 const showRestorePassword = async (req, res, next) => {
@@ -95,7 +106,7 @@ const resetPassword = async (req, res, next) => {
     await user.save();
     
     req.flash('correcto', 'Your password has been modified successfully')
-    res.redirect('/users/login')
+    res.redirect('/users/login');
 }
 module.exports = {
     authenticateUser,

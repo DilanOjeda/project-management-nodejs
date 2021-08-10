@@ -12,8 +12,9 @@ html(lang="en")
                         each error in messages[category]
                             .alerta(class=`${category}`)
                                 p= error
-            if errors
-                p.alerta.error= errors
+                            
+            //- if errors
+            //-     p.alerta.error= errors
 
             form#formulario.caja.caja-login(action="/users/login" method="POST")
                 .campo  
