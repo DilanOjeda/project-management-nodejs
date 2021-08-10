@@ -11,6 +11,10 @@ const { vardump } = require('./helpers/helpers');
 
 const app = express();
 
+
+// PORT nad SERVER
+const host = process.env.HOST || '0.0.0.0'; 
+const port = process.env.PORT || 3000;
 // Database Connection
 require('./models/project');
 require('./models/task');
@@ -69,7 +73,7 @@ app.use( '/', taskRoutes );
 app.use( '/', userRoutes );
 
 // Server 
-app.listen( process.env.PORT, () => {
-    console.log( `It's running on port ${ process.env.PORT }` );
+app.listen( port, host, () => {
+    console.log( `It's running on port ${ port } and host ${host}` );
 });
 
