@@ -38,6 +38,10 @@ const User = connectToDatabase.define('users', {
             } 
         }
     },
+    available: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+    },
     token: Sequelize.STRING,
     expiration: Sequelize.DATE
         

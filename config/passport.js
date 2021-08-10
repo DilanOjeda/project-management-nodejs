@@ -15,7 +15,11 @@ passport.use(
                 const user = await User.findOne({
                     where: { email: email }
                 });
-
+                if ( !user.available ) {
+                    return done(null, false, {
+                        message: `Your email account has to be confirmed, please check your email.`
+                    });
+                }
                 if ( !user ) {
                     return done(null, false, {
                         message: `Couldn't find your account`

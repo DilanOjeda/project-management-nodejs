@@ -108,10 +108,29 @@ const resetPassword = async (req, res, next) => {
     req.flash('correcto', 'Your password has been modified successfully')
     res.redirect('/users/login');
 }
+
+const confirmEmail = async (req, res) => {
+
+    const { email } = req.params;
+
+    const user = await User.findOne({ where: { email } });
+
+    if ( !user ) {
+        req.flash('error', 'Invalid email confirmation link')
+        return res.redirect('/users/login')
+    }
+
+    user.available = true;
+    await user.save();
+
+    req.flash('correcto', 'Your email account has been confirmed successfully')
+    return res.redirect('/users/login')
+}
 module.exports = {
     authenticateUser,
     verifyUserAuthentication,
     generateTokenToRestorePassword,
     showRestorePassword,
-    resetPassword
+    resetPassword,
+    confirmEmail
 }

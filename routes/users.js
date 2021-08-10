@@ -2,7 +2,12 @@ const { Router } = require('express');
 const router = Router();
 
 const { goToSignin, createUser, login, closeSession, showAskRestoreForm } = require('../controllers/users.controller')
-const { authenticateUser, generateTokenToRestorePassword, showRestorePassword, resetPassword } = require('../controllers/authentication.controller');
+const { 
+    authenticateUser, 
+    generateTokenToRestorePassword, 
+    showRestorePassword, 
+    resetPassword,
+    confirmEmail } = require('../controllers/authentication.controller');
 
 // To go to sign in web page
 router.get( '/users/sign-in', goToSignin );
@@ -30,5 +35,8 @@ router.get('/users/restore-password/:token', showRestorePassword );
 
 // To reset password
 router.post('/users/restore-password/:token', resetPassword );
+
+// To confirm email accoun 
+router.get('/users/confirm-email/:email',  confirmEmail);
 
 module.exports = router;

@@ -68,7 +68,6 @@ app.use( '/', projectRoutes );
 app.use( '/', taskRoutes );
 app.use( '/', userRoutes );
 
-// require('./handlers/email');
 // Server 
 app.listen( process.env.PORT, () => {
     console.log( `It's running on port ${ process.env.PORT }` );

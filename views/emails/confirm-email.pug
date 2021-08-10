@@ -1,0 +1,14 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        style
+            include ./email.css 
+    body 
+        h2 Confirm your email account - Project Management.
+        p You are almost subscribed, click the following link:
+        a(href=`${url}`) confirm your email
+        p If you do not confirm your email, you will not have access to Project Management website.
+        p #{url}

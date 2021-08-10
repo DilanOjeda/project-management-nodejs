@@ -1,5 +1,6 @@
 
 const { User } = require('../models');
+const sendResetPasswordEmail = require('../handlers/email');
 
 
 const goToSignin = async (req, res, next) => {
@@ -19,9 +20,19 @@ const createUser = async (req, res, next) => {
             password
         });
         
-        res.render('login',{
-            namePage: 'Log in to Project Management'
+        // Generate url to confirm email
+        const urlConfirm = `http://${req.headers.host}/users/confirm-email/${email}`
+
+        // Create object to confirm email
+        await sendResetPasswordEmail({
+            email,
+            subject: 'Confirm Password',
+            url: urlConfirm,
+            file: 'confirm-email'
         });
+
+        req.flash('correcto', 'A email has been sent, Confirm your email account')
+        res.redirect('/users/login')
         
     } catch (error) {
         req.flash( 'error', error.errors.map( error => error.message))
